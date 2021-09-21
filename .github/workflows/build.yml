@@ -27,7 +27,7 @@ jobs:
         node-version: 12.x
         cache: 'yarn'
     - name: Install
-      run:
+      run: |
         bundle install --path vendor/bundle
         yarn install
     - name: Build

@@ -7,7 +7,7 @@ on:
     branches: [ develop ]
 
 jobs:
-  test:
+  deploy:
 
     runs-on: ubuntu-latest
 
@@ -21,14 +21,18 @@ jobs:
       with:
         ruby-version: 2.7
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: Use Node.js 12.x
+    - name: Use Node.js
       uses: actions/setup-node@v2
       with:
         node-version: 12.x
         cache: 'yarn'
-    - name: Install
+    - name: Install Dependencies
       run: |
         bundle install --path vendor/bundle
         yarn install
+    - name: Test
+      run: |
+        yarn coverage
+        yarn lint
     - name: Build
       run: JEKYLL_ENV=production yarn build

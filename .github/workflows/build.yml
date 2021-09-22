@@ -38,6 +38,8 @@ jobs:
       run: JEKYLL_ENV=production yarn build
     - name: Deploy
       run: |
+        git config --global user.email "simonjwiles@gmail.com"
+        git config --global user.name "Simon Wiles"
         echo "COMMIT_MESSAGE=\"Deploy from $(git log -n 1 --format="%h" HEAD) at $(date +"%Y-%m-%d %H:%M:%S %Z")\"" >> $GITHUB_ENV
         git fetch --force origin gh-pages:gh-pages
         git symbolic-ref HEAD refs/heads/gh-pages

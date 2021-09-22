@@ -48,12 +48,14 @@ jobs:
 
     - name: Deploy
       run: |
-        git config --global user.email "$USER_EMAIL"
-        git config --global user.name "$USER_NAME"
-        git fetch --force origin gh-pages:gh-pages
-        git symbolic-ref HEAD refs/heads/gh-pages
-        echo "$CNAME" > "$DEPLOY_DIR/CNAME"
-        git --work-tree "$DEPLOY_DIR" reset --mixed --quiet
-        git --work-tree "$DEPLOY_DIR" add --all
-        git --work-tree "$DEPLOY_DIR" commit -m "$COMMIT_MESSAGE"
-        git push origin gh-pages
+        if ! git diff --no-ext-diff --quiet --exit-code; then
+          git config --global user.email "$USER_EMAIL"
+          git config --global user.name "$USER_NAME"
+          git fetch --force origin gh-pages:gh-pages
+          git symbolic-ref HEAD refs/heads/gh-pages
+          echo "$CNAME" > "$DEPLOY_DIR/CNAME"
+          git --work-tree "$DEPLOY_DIR" reset --mixed --quiet
+          git --work-tree "$DEPLOY_DIR" add --all
+          git --work-tree "$DEPLOY_DIR" commit -m "$COMMIT_MESSAGE"
+          git push origin gh-pages
+        fi

@@ -49,4 +49,4 @@ jobs:
         git --work-tree _site reset --mixed --quiet
         git --work-tree _site add --all
         git --work-tree _site commit -m "$COMMIT_MESSAGE"
-        git push origin gh-pages
+        git push gh-pages

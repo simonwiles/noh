@@ -37,5 +37,5 @@ jobs:
     - name: Build
       run: JEKYLL_ENV=production yarn build
     - name: Deploy
-      run: ./gh-deploy.sh
+      run: bash gh-deploy.sh
       

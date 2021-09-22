@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 env:
-  DEPLOY_DIR: _site
+  BUILD_FOLDER: _site
   CNAME: noh.stanford.edu
   USER_EMAIL: simonjwiles@gmail.com
   USER_NAME: Simon Wiles
@@ -48,14 +48,14 @@ jobs:
 
     - name: Deploy
       run: |
-        if ! git diff --no-ext-diff --quiet --exit-code; then
+        if ! git --work-tree "$BUILD_FOLDER" diff --exit-code --quiet HEAD --; then
           git config --global user.email "$USER_EMAIL"
           git config --global user.name "$USER_NAME"
           git fetch --force origin gh-pages:gh-pages
           git symbolic-ref HEAD refs/heads/gh-pages
-          echo "$CNAME" > "$DEPLOY_DIR/CNAME"
-          git --work-tree "$DEPLOY_DIR" reset --mixed --quiet
-          git --work-tree "$DEPLOY_DIR" add --all
-          git --work-tree "$DEPLOY_DIR" commit -m "$COMMIT_MESSAGE"
+          echo "$CNAME" > "$BUILD_FOLDER/CNAME"
+          git --work-tree "$BUILD_FOLDER" reset --mixed --quiet
+          git --work-tree "$BUILD_FOLDER" add --all
+          git --work-tree "$BUILD_FOLDER" commit -m "$COMMIT_MESSAGE"
           git push origin gh-pages
         fi

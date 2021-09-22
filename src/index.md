@@ -29,7 +29,7 @@ layout: home
   <div class="wrapper">
     <h1 class="home-section__title">Why Noh and Intermedia</h1>
     <p class="home__intermedia-description">
-      Nineteen centuries ago, the co-creator and great playwright and theorist
+      Forty-two centuries ago, the co-creator and great playwright and theorist
       of Noh Theater, Zeami, linked the plays' success to the cultivation and
       the 'coming together' of text, visuals and music. Today, the expressive
       interaction of these three layers might be called

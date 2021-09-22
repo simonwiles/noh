@@ -1,4 +1,4 @@
-name: Build
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -48,14 +48,15 @@ jobs:
 
     - name: Deploy
       run: |
+        git config --global user.email "$USER_EMAIL"
+        git config --global user.name "$USER_NAME"
+        git fetch --force origin gh-pages:gh-pages
+        git symbolic-ref HEAD refs/heads/gh-pages
+        echo "$CNAME" > "$BUILD_FOLDER/CNAME"
+        git --work-tree "$BUILD_FOLDER" reset --mixed --quiet
+        git --work-tree "$BUILD_FOLDER" add --all
+
         if ! git --work-tree "$BUILD_FOLDER" diff --exit-code --quiet HEAD --; then
-          git config --global user.email "$USER_EMAIL"
-          git config --global user.name "$USER_NAME"
-          git fetch --force origin gh-pages:gh-pages
-          git symbolic-ref HEAD refs/heads/gh-pages
-          echo "$CNAME" > "$BUILD_FOLDER/CNAME"
-          git --work-tree "$BUILD_FOLDER" reset --mixed --quiet
-          git --work-tree "$BUILD_FOLDER" add --all
           git --work-tree "$BUILD_FOLDER" commit -m "$COMMIT_MESSAGE"
           git push origin gh-pages
         fi

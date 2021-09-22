@@ -6,7 +6,7 @@ on:
 
 env:
   BUILD_FOLDER: _site
-  CNAME: noh.stanford.edu
+  CNAME:
   USER_EMAIL: simonjwiles@gmail.com
   USER_NAME: Simon Wiles
 
@@ -57,7 +57,7 @@ jobs:
         git config --global user.name "$USER_NAME"
         git fetch --force origin gh-pages:gh-pages
         git symbolic-ref HEAD refs/heads/gh-pages
-        echo "$CNAME" > "$BUILD_FOLDER/CNAME"
+        [ -n "$CNAME" ] && echo "$CNAME" > "$BUILD_FOLDER/CNAME"
         git --work-tree "$BUILD_FOLDER" reset --mixed --quiet
         git --work-tree "$BUILD_FOLDER" add --all
 

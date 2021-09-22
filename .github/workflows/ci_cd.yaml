@@ -5,11 +5,13 @@ on:
     branches: [ main, develop ]
 
 env:
-  DEPLOY: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
   BUILD_FOLDER: _site
   CNAME: noh.stanford.edu
   USER_EMAIL: simonjwiles@gmail.com
   USER_NAME: Simon Wiles
+
+  # Deploy only when pushing to main
+  DEPLOY: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
 
 
 jobs:
@@ -49,7 +51,7 @@ jobs:
       run:  echo "COMMIT_MESSAGE='Deploy from $(git log -n 1 --format="%h" HEAD) at $(date +"%Y-%m-%d %H:%M:%S %Z")'" >> $GITHUB_ENV
 
     - name: Deploy
-      if: ${{ env.DEPLOY }}
+      if: ${{ fromJSON(env.DEPLOY) }}
       run: |
         git config --global user.email "$USER_EMAIL"
         git config --global user.name "$USER_NAME"

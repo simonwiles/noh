@@ -37,5 +37,12 @@ jobs:
     - name: Build
       run: JEKYLL_ENV=production yarn build
     - name: Deploy
-      run: bash gh-deploy.sh
-      
+      run: |
+        echo "COMMIT_MESSAGE=\"Deploy from $(git log -n 1 --format="%h" HEAD) at $(date +"%Y-%m-%d %H:%M:%S %Z")\"" >> $GITHUB_ENV
+        git fetch --force origin gh-pages:gh-pages
+        git symbolic-ref HEAD refs/heads/gh-pages
+        echo "noh.stanford.edu" > _site/CNAME
+        git --work-tree _site reset --mixed --quiet
+        git --work-tree _site add --all
+        git --work-tree _site commit -m "$COMMIT_MESSAGE"
+        git push origin gh-pages

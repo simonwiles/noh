@@ -8,7 +8,7 @@ env:
   DEPLOY_DIR: _site
   CNAME: noh.stanford.edu
   USER_EMAIL: simonjwiles@gmail.com
-  USER_NAME: Simon Wiles 
+  USER_NAME: Simon Wiles
 
 jobs:
 
